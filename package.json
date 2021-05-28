@@ -1,0 +1,59 @@
+{
+  "name": "@template/typescript-library",
+  "version": "0.0.0",
+  "description": "",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./lib/mjs/index.js",
+      "require": "./lib/index.js"
+    }
+  },
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "clean": "npx rimraf \"lib/**/*.js\" \"lib/**/*.map\" \"lib/**/*.d.ts\" \"test/**/*.js\" \"test/**/*.map\" \"test/**/*.d.ts\"",
+    "lint": "eslint --ext .ts lib test",
+    "lint:fix": "npm run lint -- --fix",
+    "build": "rollup -c",
+    "build:tsc": "tsc -b",
+    "unit": "jest",
+    "test": "npm run lint && npm run unit",
+    "coverage": "jest --coverage",
+    "prepublishOnly": "npm run build"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/climba03003/typescript-lib-template"
+  },
+  "author": "KaKa",
+  "license": "GPL-3.0",
+  "devDependencies": {
+    "@rollup/plugin-typescript": "^8.2.1",
+    "@types/jest": "^26.0.23",
+    "@typescript-eslint/eslint-plugin": "4",
+    "eslint": "7",
+    "eslint-config-standard-with-typescript": "^20.0.0",
+    "eslint-plugin-import": "2",
+    "eslint-plugin-node": "11",
+    "eslint-plugin-promise": "5",
+    "eslint-plugin-standard": "5",
+    "husky": "^6.0.0",
+    "jest": "^26.6.3",
+    "prettier": "^2.3.0",
+    "rollup": "^2.47.0",
+    "ts-jest": "^26.5.6",
+    "typescript": "^4.2.4"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm test",
+      "pre-push": "npm test"
+    }
+  }
+}
