@@ -17,15 +17,19 @@
     "clean": "npx rimraf \"lib/**/*.js\" \"lib/**/*.map\" \"lib/**/*.d.ts\" \"test/**/*.js\" \"test/**/*.map\" \"test/**/*.d.ts\"",
     "lint": "eslint --ext .ts lib test",
     "lint:fix": "npm run lint -- --fix",
-    "build": "rollup -c",
-    "build:tsc": "tsc -b",
-    "unit": "jest",
+    "prebuild": "npm run clean",
+    "build": "npm run build:mjs && npm run build:cjs",
+    "build:cjs": "tsc -p tsconfig.cjs.json",
+    "build:mjs": "tsc -p tsconfig.mjs.json",
+    "unit": "tap",
     "test": "npm run lint && npm run unit",
-    "coverage": "jest --coverage",
-    "prepublishOnly": "npm run build"
+    "coverage": "tap --coverage-report=lcovonly",
+    "prepublishOnly": "npm run build",
+    "postpublish": "npm run clean"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   },
   "repository": {
     "type": "git",
@@ -34,26 +38,17 @@
   "author": "KaKa",
   "license": "GPL-3.0",
   "devDependencies": {
-    "@rollup/plugin-typescript": "^8.2.1",
-    "@types/jest": "^26.0.23",
-    "@typescript-eslint/eslint-plugin": "4",
-    "eslint": "7",
-    "eslint-config-standard-with-typescript": "^20.0.0",
-    "eslint-plugin-import": "2",
-    "eslint-plugin-node": "11",
-    "eslint-plugin-promise": "5",
-    "eslint-plugin-standard": "5",
-    "husky": "^6.0.0",
-    "jest": "^26.6.3",
-    "prettier": "^2.3.0",
-    "rollup": "^2.47.0",
-    "ts-jest": "^26.5.6",
-    "typescript": "^4.2.4"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm test",
-      "pre-push": "npm test"
-    }
+    "@types/node": "^18.0.0",
+    "@types/tap": "^15.0.5",
+    "@typescript-eslint/eslint-plugin": "^5.30.6",
+    "@typescript-eslint/parser": "5.36.2",
+    "eslint": "^8.19.0",
+    "eslint-config-standard-with-typescript": "^22.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-n": "^15.2.4",
+    "eslint-plugin-promise": "^6.0.0",
+    "tap": "^16.0.0",
+    "ts-node": "^10.4.0",
+    "typescript": "~4.7.0"
   }
 }

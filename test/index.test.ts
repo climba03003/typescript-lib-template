@@ -1,5 +1,7 @@
-describe('hello world', function () {
-  test('foo', function () {
-    expect('bar').toStrictEqual('bar')
-  })
+import t from 'tap'
+import * as lib from '../lib'
+
+t.test('import', function (t) {
+  t.plan(1)
+  t.same(typeof lib, 'object')
 })
